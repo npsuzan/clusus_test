@@ -1,0 +1,20 @@
+version: "3"
+services:
+  mysqldb:
+    restart: unless-stopped
+    container_name: database
+    image: mysql
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: deal
+  app:
+    depends_on:
+      - mysqldb
+    #container_name: clusus-test
+    image: xuzahn/clusus_test
+    build: .
+    restart: on-failure
+    ports:
+      - "8081:8080"
